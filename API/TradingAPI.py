@@ -23,7 +23,8 @@ class TradingAPI:
 
         Returns
         -------
-        Are self-explanatory, a tuple of lists of the following types: [string, float, float, float, float, int].
+        times, open_prices, high_prices, low_prices, close_prices, volumes : lists
+            Are self-explanatory, a tuple of lists of the following types: [string, float, float, float, float, int]. Returns None if error occured.
         """
         url = BASE_URL + '/query?function=TIME_SERIES_INTRADAY'
         url += f'&symbol={symbol}'
@@ -34,7 +35,7 @@ class TradingAPI:
         print('Request: ' + url + '.')
         response = requests.get(url)
 
-        if response.status_code == 200:
+        try:
             # extracting data in json format
             data = response.json()
             #metadata = data['Meta Data']
@@ -66,9 +67,8 @@ class TradingAPI:
             print('Data retrieved.')
 
             return times, open_prices, high_prices, low_prices, close_prices, volumes
-        else:
-            print(
-                f'ERROR: request gone wrong (error: {response.status_code}).')
+        except:
+            print(f'ERROR: request gone wrong.')
 
     def getTimeSeriesDailyAdjusted(self, symbol):
         """
@@ -81,7 +81,8 @@ class TradingAPI:
 
         Returns
         -------
-        Are self-explanatory, a tuple of lists of the following types: [string, float, float, float, float, int, float, float].
+        return times, open_prices, high_prices, low_prices, close_prices, adjusted_close_prices, volumes, dividend_amounts, split_coefficients : lists
+            Are self-explanatory, a tuple of lists of the following types: [string, float, float, float, float, int, float, float]. Returns None if error occured.
         """
         url = BASE_URL + '/query?function=TIME_SERIES_DAILY_ADJUSTED'
         url += f'&symbol={symbol}'
@@ -91,7 +92,7 @@ class TradingAPI:
         print('Request: ' + url + '.')
         response = requests.get(url)
 
-        if response.status_code == 200:
+        try:
             # extracting data in json format
             data = response.json()
             #metadata = data['Meta Data']
@@ -129,6 +130,5 @@ class TradingAPI:
             print('Data retrieved.')
 
             return times, open_prices, high_prices, low_prices, close_prices, adjusted_close_prices, volumes, dividend_amounts, split_coefficients
-        else:
-            print(
-                f'ERROR: request gone wrong (error: {response.status_code}).')
+        except:
+            print(f'ERROR: request gone wrong.')
