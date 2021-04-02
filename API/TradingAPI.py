@@ -6,6 +6,7 @@ API_KEY = 'ZY4Y0XKCPYTO1EQG'
 BASE_URL = 'https://www.alphavantage.co'
 
 
+
 class TradingAPI:
 
 
